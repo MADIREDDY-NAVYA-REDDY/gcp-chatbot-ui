@@ -2,76 +2,65 @@ import streamlit as st
 import requests
 import pandas as pd
 
-# Custom Page Title
-st.markdown(
-    "<h1 style='text-align: center; color: #00AEEF;'>Dilytics Procurement Assistant</h1>",
-    unsafe_allow_html=True
-)
-st.markdown(
-    "<p style='text-align: center; font-size:16px;'>Welcome to My AI. I am here to help with Dilytics Procurement Insights Solutions</p>",
-    unsafe_allow_html=True
-)
+# ---- Header UI ----
+st.markdown("""
+    <h1 style='text-align: center; color: #00AEEF;'>Dilytics Google AI Procurement Assistant</h1>
+    <p style='text-align: center;'>Welcome to Google AI. I am here to help with Dilytics Procurement Insights Solutions</p>
+    """, unsafe_allow_html=True)
 
-# Input box
-query = st.text_input("Ask a question...")
+# ---- Text Input ----
+query = st.text_input("Ask your question...")
 
+# ---- On Submit ----
 if st.button("Submit"):
     if query:
-        with st.spinner("Thinking..."):
-            # SQL Endpoint
+        with st.spinner("Fetching response..."):
+            # SQL Response
             sql_response = requests.post(
                 st.secrets["GCP_ENDPOINT_SQL"],
                 json={"question": query}
             )
             sql_json = sql_response.json()
 
-            # Chart Endpoint (optional, only if explicitly requested)
+            # Chart Response
             chart_response = requests.post(
                 st.secrets["GCP_ENDPOINT_CHART"],
                 json={"question": query}
             )
             chart_url = chart_response.json().get("chart_url")
 
-        # User question bubble
-        st.markdown(
-            f"""
-            <div style='background-color:#ffcccc;padding:10px;border-radius:10px;margin-bottom:10px'>
-            <strong>🧾 {query}</strong>
+        # ---- User Question ----
+        st.markdown(f"""
+            <div style='background-color:#fde2e2;padding:12px 20px;border-radius:15px;margin:10px 0;font-size:16px'>
+                <strong>🧾 {query}</strong>
             </div>
-            """,
-            unsafe_allow_html=True
-        )
+        """, unsafe_allow_html=True)
 
-        # Final AI answer bubble
+        # ---- Assistant Response ----
         if "answer" in sql_json:
-            st.markdown(
-                f"""
-                <div style='background-color:#fff3cd;padding:10px;border-radius:10px;margin-bottom:10px'>
-                <strong>📦 {sql_json['answer']}</strong>
+            st.markdown(f"""
+                <div style='background-color:#fff8d2;padding:12px 20px;border-radius:15px;margin:10px 0;font-size:16px'>
+                    <strong>📦 {sql_json['answer']}</strong>
                 </div>
-                """,
-                unsafe_allow_html=True
-            )
+            """, unsafe_allow_html=True)
 
-        # Show SQL
+        # ---- SQL Query Expandable ----
         if "sql" in sql_json:
             with st.expander("View SQL Query"):
                 st.code(sql_json["sql"], language="sql")
 
-        # Show simplified query results
+        # ---- Query Results Table ----
         data = sql_json.get("data", [])
         if data:
-            st.markdown("#### 📊 Query Results:")
-            if len(data) == 1 and "rows" in data[0]:
-                st.write(f"Rows: {data[0]['rows']}")
-            else:
-                df = pd.DataFrame(data)
-                st.dataframe(df)
+            df = pd.DataFrame(data)
+            st.markdown("### 📊 Query Results:")
+            st.dataframe(df)
         else:
             st.warning("No data found.")
 
-        # Show chart only if explicitly requested (e.g., "show chart")
-        if chart_url and "show chart" in query.lower():
+        # ---- Chart Image ----
+        if chart_url:
             st.image(chart_url, caption="Generated Chart")
     else:
         st.warning("Please enter a question.")
+
