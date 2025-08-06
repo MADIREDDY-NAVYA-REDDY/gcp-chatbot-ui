@@ -11,7 +11,7 @@ if st.button("Submit"):
         # Call SQL endpoint
         sql_response = requests.post(
             st.secrets["GCP_ENDPOINT_SQL"],
-            json={"query": query}
+            json={"question": query}
         )
 
         st.write("Raw SQL Response:", sql_response.json())
@@ -27,7 +27,7 @@ if st.button("Submit"):
         # Call Chart endpoint
         chart_response = requests.post(
             st.secrets["GCP_ENDPOINT_CHART"],
-            json={"query": query}
+            json={"question": query}
         )
         chart_url = chart_response.json().get("chart_url")
 
@@ -35,5 +35,6 @@ if st.button("Submit"):
             st.image(chart_url, caption="Generated Chart")
     else:
         st.warning("Please enter a query.")
+
 
 
