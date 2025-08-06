@@ -13,6 +13,8 @@ if st.button("Submit"):
             st.secrets["GCP_ENDPOINT_SQL"],
             json={"query": query}
         )
+
+        st.write("Raw SQL Response:", sql_response.json())
         data = sql_response.json().get("data", [])
 
         if data:
@@ -33,4 +35,5 @@ if st.button("Submit"):
             st.image(chart_url, caption="Generated Chart")
     else:
         st.warning("Please enter a query.")
+
 
