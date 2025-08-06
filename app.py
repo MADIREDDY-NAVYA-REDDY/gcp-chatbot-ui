@@ -4,11 +4,11 @@ import pandas as pd
 
 # Custom Page Title
 st.markdown(
-    "<h1 style='text-align: center; color: #00AEEF;'>Cortex AI-Procurement Assistant by DiLytics</h1>",
+    "<h1 style='text-align: center; color: #00AEEF;'>Dilytics Google AI-Procurement Assistant</h1>",
     unsafe_allow_html=True
 )
 st.markdown(
-    "<p style='text-align: center; font-size:16px;'>Welcome to Cortex AI. I am here to help with Dilytics Procurement Insights Solutions</p>",
+    "<p style='text-align: center; font-size:16px;'>Welcome to Google AI. I am here to help with Dilytics Procurement Insights Solutions</p>",
     unsafe_allow_html=True
 )
 
@@ -72,4 +72,3 @@ if st.button("Submit"):
             st.image(chart_url, caption="Generated Chart")
     else:
         st.warning("Please enter a question.")
-
