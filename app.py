@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 
-st.title("Welocme to Google AI Chatbot")
+st.title("Welcome to Google AI Chatbot")
 
 query = st.text_input("Ask a question")
 
@@ -33,3 +33,4 @@ if st.button("Submit"):
             st.image(chart_url, caption="Generated Chart")
     else:
         st.warning("Please enter a query.")
+
