@@ -3,8 +3,8 @@ import requests
 import pandas as pd
 
 # Header
-st.markdown("<h1 style='text-align: center; color: #00AEEF;'>Cortex AI-Procurement Assistant by DiLytics</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center;'>Welcome to Cortex AI. I am here to help with Dilytics Procurement Insights Solutions</p>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: #00AEEF;'>Dilytics Google AI Assistant</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center;'>Welcome to Google AI. I am here to help with Dilytics Procurement Insights Solutions</p>", unsafe_allow_html=True)
 
 # Input box
 query = st.text_input("Ask a question")
@@ -53,4 +53,5 @@ if st.button("Submit"):
 
     else:
         st.warning("Please enter a query.")
+
 
